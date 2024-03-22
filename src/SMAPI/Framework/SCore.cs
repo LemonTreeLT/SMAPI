@@ -1599,7 +1599,7 @@ namespace StardewModdingAPI.Framework
                         if (updateFound != null)
                         {
                             //this.Monitor.Log($"You can update SMAPI to {updateFound}: {updateUrl}", LogLevel.Alert);
-                            this.Monitor.Log("test", new { to="123" }, LogLevel.Alert);
+                            this.Monitor.Log("console.update-smapi-tip", new { updateFound, updateUrl }, LogLevel.Alert);
                         }
                         else
                             this.Monitor.Log("   SMAPI okay.");

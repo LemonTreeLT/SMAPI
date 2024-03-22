@@ -2,5 +2,6 @@
     // short date format for SDate
     // tokens: {{day}} (like 15), {{season}} (like Spring), {{seasonLowercase}} (like spring), {{year}} (like 2)
     "generic.date": "{{season}}{{day}}日",
-    "generic.date-with-year": "第{{year}}年{{season}}{{day}}日"
+    "generic.date-with-year": "第{{year}}年{{season}}{{day}}日",
+    "console.update-smapi-tip": "你可以将SMAPI更新到{{updateFound}}版本，链接: {{updateUrl}}"
 }
