@@ -202,6 +202,8 @@ namespace StardewModdingAPI.Framework
 
             // init basics
             this.LogManager = new LogManager(logPath: logPath, colorConfig: this.Settings.ConsoleColors, writeToConsole: writeToConsole, verboseLogging: this.Settings.VerboseLogging, isDeveloperMode: this.Settings.DeveloperMode, getScreenIdForLog: this.GetScreenIdForLog);
+            var translator = this.InitTranslator();
+            this.LogManager.Monitor.InitLogTranslations(translator);
             this.CommandManager = new CommandManager(this.Monitor);
             this.EventManager = new EventManager(this.ModRegistry);
             SCore.DeprecationManager = new DeprecationManager(this.Monitor, this.ModRegistry);
@@ -224,6 +226,21 @@ namespace StardewModdingAPI.Framework
                 this.LogManager.PressAnyKeyToExit();
             }
 #endif
+        }
+
+        /// <summary>Initialize translator.</summary>
+        public Translator InitTranslator()
+        {
+            var translations = this.ReadTranslationFiles(Path.Combine(Constants.InternalFilesPath, "i18n"), out IList<string> errors);
+            if (errors.Any() || !translations.Any())
+            {
+                this.Monitor.Log("SMAPI couldn't load some core translations. You may need to reinstall SMAPI.", LogLevel.Warn);//No translation required
+                foreach (string error in errors)
+                    this.Monitor.Log($"  - {error}", LogLevel.Warn);
+            }
+            var translator = new Translator();
+            translator.SetTranslations(translations);
+            return translator;
         }
 
         /// <summary>Launch SMAPI.</summary>
@@ -1537,7 +1554,11 @@ namespace StardewModdingAPI.Framework
                     .ToArray();
 
                 if (installedNames.Any())
-                    this.Monitor.Log($"Found {string.Join(" and ", installedNames)} installed, which may conflict with SMAPI. If you experience errors or crashes, try disabling that software or adding an exception for SMAPI and Stardew Valley.", LogLevel.Warn);
+                {
+                    //this.Monitor.Log($"Found {string.Join(" and ", installedNames)} installed, which may conflict with SMAPI. If you experience errors or crashes, try disabling that software or adding an exception for SMAPI and Stardew Valley.", LogLevel.Warn);
+                    this.Monitor.Log("console.check-for-software-conflicts-found", new { software = string.Join(" and ", installedNames) }, LogLevel.Warn);
+                }
+                    
                 else
                     this.Monitor.Log("   None found!");
             }
@@ -1580,7 +1601,10 @@ namespace StardewModdingAPI.Framework
 
                         // log message
                         if (updateFound != null)
-                            this.Monitor.Log($"You can update SMAPI to {updateFound}: {updateUrl}", LogLevel.Alert);
+                        {
+                            //this.Monitor.Log($"You can update SMAPI to {updateFound}: {updateUrl}", LogLevel.Alert);
+                            this.Monitor.Log("console.update-smapi-tip", new { updateFound, updateUrl }, LogLevel.Alert);
+                        }
                         else
                             this.Monitor.Log("   SMAPI okay.");
 

@@ -113,7 +113,7 @@ namespace StardewModdingAPI.Framework.ModLoading.Framework
             if (!type.IsGenericInstance)
                 return $"{type.FullName},{type.Scope.Name}";
 
-            var genericInstance = (GenericInstanceType) type;
+            var genericInstance = (GenericInstanceType)type;
             var genericArgs = genericInstance.GenericArguments.Select(row => "[" + RewriteHelper.GetReflectionName(row) + "]");
             return $"{genericInstance.Namespace}.{type.Name}[{string.Join(",", genericArgs)}],{type.Scope.Name}";
         }

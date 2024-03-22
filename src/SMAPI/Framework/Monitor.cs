@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using StardewModdingAPI.Framework.Logging;
@@ -33,6 +34,8 @@ namespace StardewModdingAPI.Framework
 
         /// <summary>Get the screen ID that should be logged to distinguish between players in split-screen mode, if any.</summary>
         private readonly Func<int?> GetScreenIdForLog;
+
+        private Translator Translator = new();
 
 
         /*********
@@ -74,10 +77,34 @@ namespace StardewModdingAPI.Framework
             this.GetScreenIdForLog = getScreenIdForLog;
         }
 
+        /// <summary>Construct an instance.</summary>
+        /// <param name="translator">The underlying translation manager.</param>
+        internal void InitLogTranslations(Translator translator)
+        {
+            CultureInfo culture = CultureInfo.InstalledUICulture;
+
+            // Get the name of the language
+            string language = culture.Name;
+
+            // Get the ISO code of a language
+            string languageCode = culture.TwoLetterISOLanguageName;
+            translator.SetLocale(language, languageCode);
+            this.Translator = translator;
+        }
+
         /// <inheritdoc />
         public void Log(string message, LogLevel level = LogLevel.Trace)
         {
             this.LogImpl(this.Source, message, (ConsoleLogLevel)level);
+        }
+
+        /// <summary>Log a message for the player or developer.</summary>
+        /// <param name="key">The translation key.</param>
+        /// <param name="tokens">An object containing token key/value pairs. This can be an anonymous object (like <c>new { value = 42, name = "Cranberries" }</c>), a dictionary, or a class instance.</param>
+        /// <param name="level">The log severity level.</param>
+        public void Log(string key, object? tokens, LogLevel level = LogLevel.Trace)
+        {
+            this.LogImpl(this.Source, key, tokens, (ConsoleLogLevel)level);
         }
 
         /// <inheritdoc />
@@ -139,6 +166,31 @@ namespace StardewModdingAPI.Framework
             string prefix = this.GenerateMessagePrefix(source, level);
             string fullMessage = $"{prefix} {message}";
             string consoleMessage = this.ShowFullStampInConsole ? fullMessage : $"[{source}] {message}";
+
+            // write to console
+            if (this.WriteToConsole && (this.ShowTraceInConsole || level != ConsoleLogLevel.Trace))
+                this.ConsoleWriter.WriteLine(consoleMessage, level);
+
+            // write to log file
+            this.LogFile.WriteLine(fullMessage);
+        }
+
+        /// <summary>Write translated logs to the console and default language logs to a file.</summary>
+        /// <param name="source">The name of the mod logging the message.</param>
+        /// <param name="key">The translation key.</param>
+        /// <param name="tokens">An object containing token key/value pairs. This can be an anonymous object (like <c>new { value = 42, name = "Cranberries" }</c>), a dictionary, or a class instance.</param>
+        /// <param name="level">The log level.</param>
+        private void LogImpl(string source, string key, object? tokens, ConsoleLogLevel level)
+        {
+            // get english log message
+            string defaultText = this.Translator.GetDefaultLocale(key, tokens);
+            // get i18n log message
+            string translationText = this.Translator.Get(key, tokens);
+
+            // generate message
+            string prefix = this.GenerateMessagePrefix(source, level);
+            string fullMessage = $"{prefix} {defaultText}";
+            string consoleMessage = this.ShowFullStampInConsole ? $"{prefix} {translationText}" : $"[{source}] {translationText}";
 
             // write to console
             if (this.WriteToConsole && (this.ShowTraceInConsole || level != ConsoleLogLevel.Trace))

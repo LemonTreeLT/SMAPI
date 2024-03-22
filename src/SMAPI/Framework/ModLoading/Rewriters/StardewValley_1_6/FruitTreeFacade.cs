@@ -5,7 +5,6 @@ using Netcode;
 using StardewModdingAPI.Framework.ModLoading.Framework;
 using StardewModdingAPI.Framework.ModLoading.Rewriters.StardewValley_1_6.Internal;
 using StardewValley;
-using StardewValley.Objects;
 using StardewValley.TerrainFeatures;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member: This is internal code to support rewriters and shouldn't be called directly.

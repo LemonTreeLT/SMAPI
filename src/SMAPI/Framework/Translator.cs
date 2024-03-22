@@ -56,6 +56,43 @@ namespace StardewModdingAPI.Framework
             }
         }
 
+        /// <summary>Set the current locale and pre-cache translations.</summary>
+        /// <param name="locale">The current locale.</param>
+        /// <param name="localeEnumStr">The game's current language code string.</param>
+        public void SetLocale(string locale, string localeEnumStr)
+        {
+            LocalizedContentManager.LanguageCode localeEnum = localeEnumStr switch
+            {
+                "ja-JP" => LocalizedContentManager.LanguageCode.ja,
+                "ja" => LocalizedContentManager.LanguageCode.ja,
+                "ru-RU" => LocalizedContentManager.LanguageCode.ru,
+                "ru" => LocalizedContentManager.LanguageCode.ru,
+                "zh-CN" => LocalizedContentManager.LanguageCode.zh,
+                "zh" => LocalizedContentManager.LanguageCode.zh,
+                "pt-BR" => LocalizedContentManager.LanguageCode.pt,
+                "pt" => LocalizedContentManager.LanguageCode.pt,
+                "es-ES" => LocalizedContentManager.LanguageCode.es,
+                "es" => LocalizedContentManager.LanguageCode.es,
+                "de-DE" => LocalizedContentManager.LanguageCode.de,
+                "de" => LocalizedContentManager.LanguageCode.de,
+                "th-TH" => LocalizedContentManager.LanguageCode.th,
+                "th" => LocalizedContentManager.LanguageCode.th,
+                "fr-FR" => LocalizedContentManager.LanguageCode.fr,
+                "fr" => LocalizedContentManager.LanguageCode.fr,
+                "ko-KR" => LocalizedContentManager.LanguageCode.ko,
+                "ko" => LocalizedContentManager.LanguageCode.ko,
+                "it-IT" => LocalizedContentManager.LanguageCode.it,
+                "it" => LocalizedContentManager.LanguageCode.it,
+                "tr-TR" => LocalizedContentManager.LanguageCode.tr,
+                "tr" => LocalizedContentManager.LanguageCode.tr,
+                "hu-HU" => LocalizedContentManager.LanguageCode.hu,
+                "hu" => LocalizedContentManager.LanguageCode.hu,
+                _ => LocalizedContentManager.LanguageCode.en,
+            };
+
+            this.SetLocale(locale, localeEnum);
+        }
+
         /// <summary>Get all translations for the current locale.</summary>
         public IEnumerable<Translation> GetTranslations()
         {
@@ -76,6 +113,27 @@ namespace StardewModdingAPI.Framework
         public Translation Get(string key, object? tokens)
         {
             return this.Get(key).Tokens(tokens);
+        }
+
+        /// <summary>Get a translation for the default locale.</summary>
+        /// <param name="key">The translation key.</param>
+        public Translation GetDefaultLocale(string key)
+        {
+            this.All.TryGetValue("default", out IDictionary<string, string>? translations);
+            if (translations != null)
+            {
+                translations.TryGetValue(key, out string? text);
+                return new Translation("default", key, text);
+            }
+            return new Translation("default", key, null);
+        }
+
+        /// <summary>Get a translation for the default locale.</summary>
+        /// <param name="key">The translation key.</param>
+        /// <param name="tokens">An object containing token key/value pairs. This can be an anonymous object (like <c>new { value = 42, name = "Cranberries" }</c>), a dictionary, or a class instance.</param>
+        public Translation GetDefaultLocale(string key, object? tokens)
+        {
+            return this.GetDefaultLocale(key).Tokens(tokens);
         }
 
         /// <summary>Get a translation in every locale for which it's defined.</summary>
