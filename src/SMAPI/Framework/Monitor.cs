@@ -78,14 +78,16 @@ namespace StardewModdingAPI.Framework
             this.GetScreenIdForLog = getScreenIdForLog;
         }
 
-        internal void initLogTranslations(Translator translator)
+        /// <summary>Construct an instance.</summary>
+        /// <param name="translator">The underlying translation manager.</param>
+        internal void InitLogTranslations(Translator translator)
         {
             CultureInfo culture = CultureInfo.InstalledUICulture;
 
-            // 获取语言的名称
+            // Get the name of the language
             string language = culture.Name;
 
-            // 获取语言的 ISO 代码
+            // Get the ISO code of a language
             string languageCode = culture.TwoLetterISOLanguageName;
             translator.SetLocale(language, languageCode);
             this.Translator = translator;
@@ -170,6 +172,11 @@ namespace StardewModdingAPI.Framework
             this.LogFile.WriteLine(fullMessage);
         }
 
+        /// <summary>Write translated logs to the console and default language logs to a file.</summary>
+        /// <param name="source">The name of the mod logging the message.</param>
+        /// <param name="key">The translation key.</param>
+        /// <param name="tokens">An object containing token key/value pairs. This can be an anonymous object (like <c>new { value = 42, name = "Cranberries" }</c>), a dictionary, or a class instance.</param>
+        /// <param name="level">The log level.</param>
         private void LogImpl(string source, string key, object? tokens, ConsoleLogLevel level)
         {
             // get english log message
