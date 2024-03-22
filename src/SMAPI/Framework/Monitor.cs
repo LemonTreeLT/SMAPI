@@ -99,8 +99,7 @@ namespace StardewModdingAPI.Framework
 
         public void Log(string key, object? tokens, LogLevel level = LogLevel.Trace)
         {
-            Translation translation = this.Translator.Get(key, tokens);//TODO 确保Translator不为null
-            this.LogImpl(this.Source, translation.ToString(), (ConsoleLogLevel)level);
+            this.LogImpl(this.Source, key, tokens, (ConsoleLogLevel)level);
         }
 
         /// <inheritdoc />
@@ -162,6 +161,26 @@ namespace StardewModdingAPI.Framework
             string prefix = this.GenerateMessagePrefix(source, level);
             string fullMessage = $"{prefix} {message}";
             string consoleMessage = this.ShowFullStampInConsole ? fullMessage : $"[{source}] {message}";
+
+            // write to console
+            if (this.WriteToConsole && (this.ShowTraceInConsole || level != ConsoleLogLevel.Trace))
+                this.ConsoleWriter.WriteLine(consoleMessage, level);
+
+            // write to log file
+            this.LogFile.WriteLine(fullMessage);
+        }
+
+        private void LogImpl(string source, string key, object? tokens, ConsoleLogLevel level)
+        {
+            // get english log message
+            string defaultText = this.Translator.GetDefaultLocale(key,tokens);
+            // get i18n log message
+            string translationText = this.Translator.Get(key, tokens);
+
+            // generate message
+            string prefix = this.GenerateMessagePrefix(source, level);
+            string fullMessage = $"{prefix} {defaultText}";
+            string consoleMessage = this.ShowFullStampInConsole ? $"{prefix} {translationText}" : $"[{source}] {translationText}";
 
             // write to console
             if (this.WriteToConsole && (this.ShowTraceInConsole || level != ConsoleLogLevel.Trace))

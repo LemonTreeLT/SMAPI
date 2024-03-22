@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using StardewValley;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace StardewModdingAPI.Framework
 {
@@ -110,6 +111,22 @@ namespace StardewModdingAPI.Framework
         public Translation Get(string key, object? tokens)
         {
             return this.Get(key).Tokens(tokens);
+        }
+
+        public Translation GetDefaultLocale(string key)
+        {
+            this.All.TryGetValue("default", out IDictionary<string, string>? translations);
+            if (translations!=null)
+            {
+                translations.TryGetValue(key, out string? text);
+                return new Translation("default", key, text);
+            }
+            return new Translation("default", key, null);
+        }
+
+        public Translation GetDefaultLocale(string key, object? tokens)
+        {
+            return this.GetDefaultLocale(key).Tokens(tokens);
         }
 
         /// <summary>Get a translation in every locale for which it's defined.</summary>
