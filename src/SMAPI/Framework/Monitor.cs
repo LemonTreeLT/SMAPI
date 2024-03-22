@@ -99,6 +99,10 @@ namespace StardewModdingAPI.Framework
             this.LogImpl(this.Source, message, (ConsoleLogLevel)level);
         }
 
+        /// <summary>Log a message for the player or developer.</summary>
+        /// <param name="key">The translation key.</param>
+        /// <param name="tokens">An object containing token key/value pairs. This can be an anonymous object (like <c>new { value = 42, name = "Cranberries" }</c>), a dictionary, or a class instance.</param>
+        /// <param name="level">The log severity level.</param>
         public void Log(string key, object? tokens, LogLevel level = LogLevel.Trace)
         {
             this.LogImpl(this.Source, key, tokens, (ConsoleLogLevel)level);
