@@ -56,6 +56,40 @@ namespace StardewModdingAPI.Framework
             }
         }
 
+        public void SetLocale(string locale, string localeEnumStr)
+        {
+            LocalizedContentManager.LanguageCode localeEnum = localeEnumStr switch
+            {
+                "ja-JP" => LocalizedContentManager.LanguageCode.ja,
+                "ja" => LocalizedContentManager.LanguageCode.ja,
+                "ru-RU" => LocalizedContentManager.LanguageCode.ru,
+                "ru" => LocalizedContentManager.LanguageCode.ru,
+                "zh-CN" => LocalizedContentManager.LanguageCode.zh,
+                "zh" => LocalizedContentManager.LanguageCode.zh,
+                "pt-BR" => LocalizedContentManager.LanguageCode.pt,
+                "pt" => LocalizedContentManager.LanguageCode.pt,
+                "es-ES" => LocalizedContentManager.LanguageCode.es,
+                "es" => LocalizedContentManager.LanguageCode.es,
+                "de-DE" => LocalizedContentManager.LanguageCode.de,
+                "de" => LocalizedContentManager.LanguageCode.de,
+                "th-TH" => LocalizedContentManager.LanguageCode.th,
+                "th" => LocalizedContentManager.LanguageCode.th,
+                "fr-FR" => LocalizedContentManager.LanguageCode.fr,
+                "fr" => LocalizedContentManager.LanguageCode.fr,
+                "ko-KR" => LocalizedContentManager.LanguageCode.ko,
+                "ko" => LocalizedContentManager.LanguageCode.ko,
+                "it-IT" => LocalizedContentManager.LanguageCode.it,
+                "it" => LocalizedContentManager.LanguageCode.it,
+                "tr-TR" => LocalizedContentManager.LanguageCode.tr,
+                "tr" => LocalizedContentManager.LanguageCode.tr,
+                "hu-HU" => LocalizedContentManager.LanguageCode.hu,
+                "hu" => LocalizedContentManager.LanguageCode.hu,
+                _ => LocalizedContentManager.LanguageCode.en,
+            };
+
+            this.SetLocale(locale, localeEnum);
+        }
+
         /// <summary>Get all translations for the current locale.</summary>
         public IEnumerable<Translation> GetTranslations()
         {

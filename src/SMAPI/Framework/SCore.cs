@@ -202,6 +202,8 @@ namespace StardewModdingAPI.Framework
 
             // init basics
             this.LogManager = new LogManager(logPath: logPath, colorConfig: this.Settings.ConsoleColors, writeToConsole: writeToConsole, verboseLogging: this.Settings.VerboseLogging, isDeveloperMode: this.Settings.DeveloperMode, getScreenIdForLog: this.GetScreenIdForLog);
+            var translator = this.InitTranslator();
+            this.LogManager.Monitor.initLogTranslations(translator);
             this.CommandManager = new CommandManager(this.Monitor);
             this.EventManager = new EventManager(this.ModRegistry);
             SCore.DeprecationManager = new DeprecationManager(this.Monitor, this.ModRegistry);
@@ -224,6 +226,20 @@ namespace StardewModdingAPI.Framework
                 this.LogManager.PressAnyKeyToExit();
             }
 #endif
+        }
+
+        public Translator InitTranslator()
+        {
+            var translations = this.ReadTranslationFiles(Path.Combine(Constants.InternalFilesPath, "i18n"), out IList<string> errors);
+            if (errors.Any() || !translations.Any())
+            {
+                this.Monitor.Log("SMAPI couldn't load some core translations. You may need to reinstall SMAPI.", LogLevel.Warn);//No translation required
+                foreach (string error in errors)
+                    this.Monitor.Log($"  - {error}", LogLevel.Warn);
+            }
+            var translator = new Translator();
+            translator.SetTranslations(translations);
+            return translator;
         }
 
         /// <summary>Launch SMAPI.</summary>
@@ -1580,7 +1596,10 @@ namespace StardewModdingAPI.Framework
 
                         // log message
                         if (updateFound != null)
-                            this.Monitor.Log($"You can update SMAPI to {updateFound}: {updateUrl}", LogLevel.Alert);
+                        {
+                            //this.Monitor.Log($"You can update SMAPI to {updateFound}: {updateUrl}", LogLevel.Alert);
+                            this.Monitor.Log("test", new { to="123" }, LogLevel.Alert);
+                        }
                         else
                             this.Monitor.Log("   SMAPI okay.");
 

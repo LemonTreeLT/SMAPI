@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using StardewModdingAPI.Framework.Logging;
@@ -33,6 +35,8 @@ namespace StardewModdingAPI.Framework
 
         /// <summary>Get the screen ID that should be logged to distinguish between players in split-screen mode, if any.</summary>
         private readonly Func<int?> GetScreenIdForLog;
+
+        private Translator Translator = new();
 
 
         /*********
@@ -74,10 +78,29 @@ namespace StardewModdingAPI.Framework
             this.GetScreenIdForLog = getScreenIdForLog;
         }
 
+        internal void initLogTranslations(Translator translator)
+        {
+            CultureInfo culture = CultureInfo.InstalledUICulture;
+
+            // 获取语言的名称
+            string language = culture.DisplayName;
+
+            // 获取语言的 ISO 代码
+            string languageCode = culture.TwoLetterISOLanguageName;
+            translator.SetLocale(language, languageCode);
+            this.Translator = translator;
+        }
+
         /// <inheritdoc />
         public void Log(string message, LogLevel level = LogLevel.Trace)
         {
             this.LogImpl(this.Source, message, (ConsoleLogLevel)level);
+        }
+
+        public void Log(string key, object? tokens, LogLevel level = LogLevel.Trace)
+        {
+            Translation translation = this.Translator.Get(key, tokens);//TODO 确保Translator不为null
+            this.LogImpl(this.Source, translation.ToString(), (ConsoleLogLevel)level);
         }
 
         /// <inheritdoc />
