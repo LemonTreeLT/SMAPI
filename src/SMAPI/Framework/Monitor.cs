@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using StardewModdingAPI.Framework.Logging;
@@ -184,7 +183,7 @@ namespace StardewModdingAPI.Framework
         private void LogImpl(string source, string key, object? tokens, ConsoleLogLevel level)
         {
             // get english log message
-            string defaultText = this.Translator.GetDefaultLocale(key,tokens);
+            string defaultText = this.Translator.GetDefaultLocale(key, tokens);
             // get i18n log message
             string translationText = this.Translator.Get(key, tokens);
 
