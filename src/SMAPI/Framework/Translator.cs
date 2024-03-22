@@ -116,6 +116,8 @@ namespace StardewModdingAPI.Framework
             return this.Get(key).Tokens(tokens);
         }
 
+        /// <summary>Get a translation for the default locale.</summary>
+        /// <param name="key">The translation key.</param>
         public Translation GetDefaultLocale(string key)
         {
             this.All.TryGetValue("default", out IDictionary<string, string>? translations);
@@ -127,6 +129,9 @@ namespace StardewModdingAPI.Framework
             return new Translation("default", key, null);
         }
 
+        /// <summary>Get a translation for the default locale.</summary>
+        /// <param name="key">The translation key.</param>
+        /// <param name="tokens">An object containing token key/value pairs. This can be an anonymous object (like <c>new { value = 42, name = "Cranberries" }</c>), a dictionary, or a class instance.</param>
         public Translation GetDefaultLocale(string key, object? tokens)
         {
             return this.GetDefaultLocale(key).Tokens(tokens);
