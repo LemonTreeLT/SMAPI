@@ -83,7 +83,7 @@ namespace StardewModdingAPI.Framework
             CultureInfo culture = CultureInfo.InstalledUICulture;
 
             // 获取语言的名称
-            string language = culture.DisplayName;
+            string language = culture.Name;
 
             // 获取语言的 ISO 代码
             string languageCode = culture.TwoLetterISOLanguageName;
