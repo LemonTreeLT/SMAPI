@@ -21,6 +21,12 @@ namespace StardewModdingAPI
         /// <param name="level">The log severity level.</param>
         void Log(string message, LogLevel level = LogLevel.Trace);
 
+        /// <summary>Log a message for the player or developer.</summary>
+        /// <param name="key">The translation key.</param>
+        /// <param name="tokens">An object containing token key/value pairs. This can be an anonymous object (like <c>new { value = 42, name = "Cranberries" }</c>), a dictionary, or a class instance.</param>
+        /// <param name="level">The log severity level.</param>
+        void Log(string key, object? tokens, LogLevel level = LogLevel.Trace);
+
         /// <summary>Log a message for the player or developer, but only if it hasn't already been logged since the last game launch.</summary>
         /// <param name="message">The message to log.</param>
         /// <param name="level">The log severity level.</param>
