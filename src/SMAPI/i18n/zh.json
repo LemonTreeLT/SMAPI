@@ -5,5 +5,6 @@
     "generic.date-with-year": "第{{year}}年{{season}}{{day}}日",
     "console.update-smapi-tip": "你可以将SMAPI更新到{{updateFound}}版本，链接: {{updateUrl}}",
     "console.check-for-software-conflicts-found": "发现已安装{{software}}，可能与SMAPI冲突。如果您遇到错误或崩溃，请尝试禁用该软件或为SMAPI和Stardew Valley添加排除项。",
-    "console.platform": "SMAPI {{SmapiVersion}} 和 Stardew Valley {{GameVersion}} 安装在 {{OsVersion}} 上"
+    "console.platform": "SMAPI {{SmapiVersion}} 和 Stardew Valley {{GameVersion}} 安装在 {{OsVersion}} 上",
+    "console.wait-for-game-launch": "等待游戏启动..."
 }

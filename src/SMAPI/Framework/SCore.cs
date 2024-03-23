@@ -317,7 +317,8 @@ namespace StardewModdingAPI.Framework
             this.UpdateWindowTitles();
 
             // start game
-            this.Monitor.Log("Waiting for game to launch...", LogLevel.Debug);
+            //this.Monitor.Log("Waiting for game to launch...", LogLevel.Debug);
+            this.Monitor.Log("console.wait-for-game-launch", null, LogLevel.Debug);
             try
             {
                 this.IsGameRunning = true;
