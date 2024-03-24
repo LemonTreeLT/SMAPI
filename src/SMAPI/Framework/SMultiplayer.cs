@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Force.DeepCloner;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using StardewModdingAPI.Events;
@@ -319,7 +320,7 @@ namespace StardewModdingAPI.Framework
                                 sendMessage: sendMessage,
                                 isHost: this.HostPeer == null
                             );
-                            this.Monitor.Log($"Received connection for vanilla {(peer.IsHost ? "host" : "farmhand")} {message.FarmerID}.");
+                            this.Monitor.Log("console.received-connection", new {FarmerName = peer.IsHost ? "host" : "farmhand", PlayerID = message.FarmerID});
                             this.AddPeer(peer, canBeHost: true);
                         }
 
