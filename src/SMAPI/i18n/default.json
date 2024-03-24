@@ -7,5 +7,6 @@
     "console.check-for-software-conflicts-found": "Found {{software}} installed, which may conflict with SMAPI. If you experience errors or crashes, try disabling that software or adding an exception for SMAPI and Stardew Valley.",
     "console.platform": "SMAPI {{SmapiVersion}} with Stardew Valley {{GameVersion}} on {{OsVersion}}",
     "console.error-command-name": "There's no command with that name. Type 'help' by itself for more info.",
-    "console.received-connection": "Received connection for vanilla {{FarmerName}} {{PlayerID}}."
+    "console.received-connection": "Received connection for vanilla {{FarmerName}} {{PlayerID}}.",
+    "console.rejected-mod-context": "Rejected mod context from host player {{ID}}: already received host data from player {{ID}}."
 }
