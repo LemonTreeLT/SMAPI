@@ -181,7 +181,7 @@ namespace StardewModdingAPI.Framework
                         );
                         if (this.Peers.ContainsKey(message.FarmerID))
                         {
-                            this.Monitor.Log($"Received mod context from farmhand {message.FarmerID}, but the game didn't see them disconnect. This may indicate issues with the network connection.", LogLevel.Info);
+                            this.Monitor.Log("console.received-mod-context-no-disconnect", new {ID = message.FarmerID}, LogLevel.Info);
                             this.Peers.Remove(message.FarmerID);
                             return;
                         }

@@ -8,5 +8,6 @@
     "console.platform": "SMAPI {{SmapiVersion}} with Stardew Valley {{GameVersion}} on {{OsVersion}}",
     "console.error-command-name": "There's no command with that name. Type 'help' by itself for more info.",
     "console.received-connection": "Received connection for vanilla {{FarmerName}} {{PlayerID}}.",
-    "console.rejected-mod-context": "Rejected mod context from host player {{ID}}: already received host data from player {{ID}}."
+    "console.rejected-mod-context": "Rejected mod context from host player {{ID}}: already received host data from player {{ID}}.",
+    "console.received-mod-context-no-disconnect": "Received mod context from farmhand {{ID}}, but the game didn't see them disconnect. This may indicate issues with the network connection."
 }
