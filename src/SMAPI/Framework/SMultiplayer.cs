@@ -319,7 +319,7 @@ namespace StardewModdingAPI.Framework
                                 sendMessage: sendMessage,
                                 isHost: this.HostPeer == null
                             );
-                            this.Monitor.Log($"Received connection for vanilla {(peer.IsHost ? "host" : "farmhand")} {message.FarmerID}.");
+                            this.Monitor.Log("console.received-connection", new {FarmerName = peer.IsHost ? "host" : "farmhand", PlayerID = message.FarmerID});
                             this.AddPeer(peer, canBeHost: true);
                         }
 
