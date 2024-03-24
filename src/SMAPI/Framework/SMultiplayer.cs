@@ -279,7 +279,7 @@ namespace StardewModdingAPI.Framework
                         );
                         if (peer.IsHost && this.HostPeer != null)
                         {
-                            this.Monitor.Log($"Rejected mod context from host player {peer.PlayerID}: already received host data from {(peer.PlayerID == this.HostPeer.PlayerID ? "that player" : $"player {peer.PlayerID}")}.", LogLevel.Error);
+                            this.Monitor.Log("console.rejected-mod-context", new {ID = peer.PlayerID}, LogLevel.Error);
                             return;
                         }
                         this.AddPeer(peer, canBeHost: true);

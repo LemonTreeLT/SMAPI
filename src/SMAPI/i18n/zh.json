@@ -7,5 +7,6 @@
     "console.check-for-software-conflicts-found": "发现已安装{{software}}，可能与SMAPI冲突。如果您遇到错误或崩溃，请尝试禁用该软件或为SMAPI和Stardew Valley添加排除项。",
     "console.platform": "SMAPI {{SmapiVersion}} 和 Stardew Valley {{GameVersion}} 安装在 {{OsVersion}} 上",
     "console.error-command-name": "你输入的命令不可用，输入'help'以获取帮助",
-    "console.received-connection": "收到来自原版 {{FarmerName}} {{PlayerID}} 的连接."
+    "console.received-connection": "收到来自原版 {{FarmerName}} {{PlayerID}} 的连接.",
+    "console.rejected-mod-context": "拒绝了主机 {{ID}} 的模组环境: 已经从玩家 {{ID}} 获取了主机数据."
 }
