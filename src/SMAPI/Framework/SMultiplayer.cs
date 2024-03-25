@@ -181,7 +181,7 @@ namespace StardewModdingAPI.Framework
                         );
                         if (this.Peers.ContainsKey(message.FarmerID))
                         {
-                            this.Monitor.Log($"Received mod context from farmhand {message.FarmerID}, but the game didn't see them disconnect. This may indicate issues with the network connection.", LogLevel.Info);
+                            this.Monitor.LogTra("console.received-mod-context-no-disconnect", new {ID = message.FarmerID}, LogLevel.Info);
                             this.Peers.Remove(message.FarmerID);
                             return;
                         }
@@ -279,7 +279,7 @@ namespace StardewModdingAPI.Framework
                         );
                         if (peer.IsHost && this.HostPeer != null)
                         {
-                            this.Monitor.LogTra("console.rejected-mod-context", new {ID = peer.PlayerID}, LogLevel.Error);
+                            this.Monitor.LogTra("console.s-multiplayer.rejected-mod-context", new {ID = peer.PlayerID}, LogLevel.Error);
                             return;
                         }
                         this.AddPeer(peer, canBeHost: true);
