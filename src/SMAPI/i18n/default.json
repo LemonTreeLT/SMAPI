@@ -108,6 +108,7 @@
     "console.s-multiplayer.client-send-message": "CLIENT SEND {{SendMessageType}} {{MessageFarmerID}}",
     "console.s-multiplayer.server-recv-message": "SERVER RECV {{RecvMessageType}} {{MessageFarmerID}}",
     "console.s-multiplayer.received-connection": "Received connection for vanilla player {{FarmerPlayerId}}.",
+    "console.s-multiplayer.received-connection-with-host": "Received connection for vanilla {{HostOrFarmhand}} {{FarmerID}}.",
     "console.s-multiplayer.client-recv-message": "CLIENT RECV {{RecvMessageType}} {{FarmerPlayerId}}",
     "console.s-multiplayer.player-quit": "Player quit: {{playerID}}",
     "console.s-multiplayer.broadcasting-message-to-self": "Broadcasting '{{messageType}}' message to self: {{data}}.",
