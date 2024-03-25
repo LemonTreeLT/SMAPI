@@ -3,11 +3,6 @@
     // tokens: {{day}} (like 15), {{season}} (like Spring), {{seasonLowercase}} (like spring), {{year}} (like 2)
     "generic.date": "{{season}} {{day}}",
     "generic.date-with-year": "{{season}} {{day}} in year {{year}}",
-    "console.update-smapi-tip": "You can update SMAPI to {{updateFound}}: {{updateUrl}}",
-    "console.check-for-software-conflicts-found": "Found {{software}} installed, which may conflict with SMAPI. If you experience errors or crashes, try disabling that software or adding an exception for SMAPI and Stardew Valley.",
-    "console.platform": "SMAPI {{SmapiVersion}} with Stardew Valley {{GameVersion}} on {{OsVersion}}",
-    "console.error-command-name": "There's no command with that name. Type 'help' by itself for more info.",
-    "console.received-connection": "Received connection for vanilla {{FarmerName}} {{PlayerID}}.",
     "console.content-coordinator.invalidated-cache": "Invalidated 0 cache entries.",
     "console.content-coordinator.disposing-the-content-coordinator": "Disposing the content coordinator. Content managers will no longer be usable after this point.",
     "console.game-content-manager.broke-loop-loaded-asset": "Broke loop while loading asset '{{assetName}}'.",
