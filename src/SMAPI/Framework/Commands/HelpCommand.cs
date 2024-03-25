@@ -41,7 +41,7 @@ namespace StardewModdingAPI.Framework.Commands
             {
                 Command? result = this.CommandManager.Get(args[0]);
                 if (result == null)
-                    monitor.Log("console.error-command-name", null, LogLevel.Error);
+                    monitor.LogTra("console.help-command.error-command-name", null, LogLevel.Error);
                 else
                     monitor.Log($"{result.Name}: {result.Documentation}{(result.Mod != null ? $"\n(Added by {result.Mod.DisplayName}.)" : "")}", LogLevel.Info);
             }
