@@ -181,7 +181,7 @@ namespace StardewModdingAPI.Framework
                         );
                         if (this.Peers.ContainsKey(message.FarmerID))
                         {
-                            this.Monitor.LogTra("console.received-mod-context-no-disconnect", new {ID = message.FarmerID}, LogLevel.Info);
+                            this.Monitor.LogTra("console.s-multiplayer.received-mod-context-no-disconnect", new {ID = message.FarmerID}, LogLevel.Info);
                             this.Peers.Remove(message.FarmerID);
                             return;
                         }
