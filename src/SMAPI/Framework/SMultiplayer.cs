@@ -264,27 +264,28 @@ namespace StardewModdingAPI.Framework
             {
                 // mod context sync (step 4)
                 case (byte)MessageType.ModContext:
-                    {
-                        // parse message
-                        RemoteContextModel? model = this.ReadContext(message.Reader);
-                        this.Monitor.Log($"Received context for {(model?.IsHost == true ? "host" : "farmhand")} {message.FarmerID} running {(model != null ? $"SMAPI {model.ApiVersion} with {model.Mods.Length} mods" : "vanilla")}.");
+                {
+                    // parse message
+                    RemoteContextModel? model = this.ReadContext(message.Reader);
+                    // this.Monitor.Log($"Received context for {(model?.IsHost == true ? "host" : "farmhand")} {message.FarmerID} running {(model != null ? $"SMAPI {model.ApiVersion} with {model.Mods.Length} mods" : "vanilla")}.");
+                    this.Monitor.LogTra(model != null ? "console.s-multiplayer.received-mod-context-smapi" : "console.s-multiplayer.received-mod-context-vanilla", model != null ? new { ID = message.FarmerID, SMVer = model.ApiVersion, ModLength = model.Mods.Length } : new { ID = message.FarmerID});
 
-                        // store peer
-                        MultiplayerPeer peer = new(
-                            playerID: message.FarmerID,
-                            screenID: this.GetScreenId(message.FarmerID),
-                            model: model,
-                            sendMessage: sendMessage,
-                            isHost: model?.IsHost ?? this.HostPeer == null
+                    // store peer
+                    MultiplayerPeer peer = new(
+                        playerID: message.FarmerID,
+                        screenID: this.GetScreenId(message.FarmerID),
+                        model: model,
+                        sendMessage: sendMessage,
+                        isHost: model?.IsHost ?? this.HostPeer == null
                         );
-                        if (peer.IsHost && this.HostPeer != null)
-                        {
-                            this.Monitor.LogTra("console.s-multiplayer.rejected-mod-context", new {ID = peer.PlayerID}, LogLevel.Error);
-                            return;
-                        }
-                        this.AddPeer(peer, canBeHost: true);
+                    if (peer.IsHost && this.HostPeer != null)
+                    {
+                        this.Monitor.LogTra("console.s-multiplayer.rejected-mod-context", new {ID = peer.PlayerID}, LogLevel.Error);
+                        return;
                     }
-                    break;
+                    this.AddPeer(peer, canBeHost: true);
+                }
+                break;
 
                 // handle server intro
                 case (byte)MessageType.ServerIntroduction:
