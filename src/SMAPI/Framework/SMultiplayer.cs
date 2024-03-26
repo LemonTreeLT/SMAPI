@@ -169,7 +169,7 @@ namespace StardewModdingAPI.Framework
                     {
                         // parse message
                         RemoteContextModel? model = this.ReadContext(message.Reader);
-                        this.Monitor.Log($"Received context for farmhand {message.FarmerID} running {(model != null ? $"SMAPI {model.ApiVersion} with {model.Mods.Length} mods" : "vanilla")}.");
+                        this.Monitor.LogTra(model != null ? "console.s-multiplayer.received-mod-context-smapi" : "console.s-multiplayer.received-mod-context-vanilla", model != null ? new { ID = message.FarmerID, SMVer = model.ApiVersion, ModLength = model.Mods.Length } : new { ID = message.FarmerID});
 
                         // store peer
                         MultiplayerPeer newPeer = new(
