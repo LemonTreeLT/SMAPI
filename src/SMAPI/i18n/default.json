@@ -124,5 +124,6 @@
     "console.core-asset-propagator.propagatiing-asset-change-error": "An error occurred while propagating asset changes. Error details:\n{{LogSummary}}",
     "console.core-asset-propagator.skip-asset-not-exist": "Skipped reload for '{{Name}}' because the underlying asset no longer exists.",
     "console.help-command.error-command-name": "There's no command with that name. Type 'help' by itself for more info.",
-    "console.mod-scanner-no-manifest": "it contains files, but none of them are manifest.json."
+    "console.mod-scanner-no-manifest": "it contains files, but none of them are manifest.json.",
+    "console.mod-scanner.smapi-installer-isnt-mod": "the SMAPI installer isn't a mod (you can delete this folder after running the installer file)."
 }
