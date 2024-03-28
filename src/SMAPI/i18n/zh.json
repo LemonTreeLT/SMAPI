@@ -123,5 +123,6 @@
     "console.s-multiplayer.received-mod-context-vanilla": "收到玩家(主机) {{ID}} 正在运行原版.",
     "console.core-asset-propagator.propagatiing-asset-change-error": "在传播资产更改时发生错误。错误细节：\n{{LogSummary}}",
     "console.core-asset-propagator.skip-asset-not-exist": "跳过 '{{Name}}' 的重新加载，因为底层资产不存在。",
-    "console.help-command.error-command-name": "你输入的命令不可用，输入'help'以获取帮助"
+    "console.help-command.error-command-name": "你输入的命令不可用，输入'help'以获取帮助",
+    "console.mod-scanner-no-manifest": "模组文件夹中包含文件，但没有manifest.json文件。"
 }

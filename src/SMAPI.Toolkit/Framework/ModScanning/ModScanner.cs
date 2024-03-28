@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using StardewModdingAPI.Toolkit.Serialization;
 using StardewModdingAPI.Toolkit.Serialization.Models;
+using StardewModdingAPI.Toolkit.Utilities;
 using StardewModdingAPI.Toolkit.Utilities.PathLookups;
 
 namespace StardewModdingAPI.Toolkit.Framework.ModScanning
@@ -148,7 +149,7 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
                     return new ModFolder(root, searchFolder, ModType.Invalid, null, ModParseError.ManifestMissing, "the SMAPI installer isn't a mod (you can delete this folder after running the installer file).");
 
                 // not a mod?
-                return new ModFolder(root, searchFolder, ModType.Invalid, null, ModParseError.ManifestMissing, "it contains files, but none of them are manifest.json.");
+                return new ModFolder(root, searchFolder, ModType.Invalid, null, ModParseError.ManifestMissing, I18nUtilities.Get("console.mod-scanner-no-manifest", null));
             }
 
             // read mod info
