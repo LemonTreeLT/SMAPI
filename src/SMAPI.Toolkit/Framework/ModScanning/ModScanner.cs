@@ -134,7 +134,7 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
                 // empty Vortex folder
                 // (this filters relevant files internally so it can check for the normally-ignored Vortex marker file)
                 if (this.IsEmptyVortexFolder(files))
-                    return new ModFolder(root, searchFolder, ModType.Invalid, null, ModParseError.EmptyVortexFolder, "it's an empty Vortex folder (is the mod disabled in Vortex?).");
+                    return new ModFolder(root, searchFolder, ModType.Invalid, null, ModParseError.EmptyVortexFolder, I18nUtilities.Get("console.mod-scanner.empty-vortex-folder", null));
 
                 // empty folder
                 if (!relevantFiles.Any())
@@ -162,18 +162,18 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
                     if (!this.JsonHelper.ReadJsonFileIfExists<Manifest>(manifestFile.FullName, out manifest))
                     {
                         error = ModParseError.ManifestInvalid;
-                        errorText = "its manifest is invalid.";
+                        errorText = I18nUtilities.Get("console.mod-scanner.error-invalid-manifest", null);
                     }
                 }
                 catch (SParseException ex)
                 {
                     error = ModParseError.ManifestInvalid;
-                    errorText = $"parsing its manifest failed: {ex.Message}";
+                    errorText = I18nUtilities.Get("console.mod-scanner.error-parsing-manifest-failed", new {msg = ex.Message});
                 }
                 catch (Exception ex)
                 {
                     error = ModParseError.ManifestInvalid;
-                    errorText = $"parsing its manifest failed:\n{ex}";
+                    errorText = I18nUtilities.Get("console.mod-scanner.error-parsing-manifest-failed", new {msg = ex.Message});
                 }
             }
 
@@ -212,7 +212,7 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
             {
                 if (folder.Name.StartsWith("."))
                 {
-                    yield return new ModFolder(root, folder, ModType.Ignored, null, ModParseError.IgnoredFolder, "ignored folder because its name starts with a dot.");
+                    yield return new ModFolder(root, folder, ModType.Ignored, null, ModParseError.IgnoredFolder, I18nUtilities.Get("console.mod-scanner.error-ignored-folder", null));
                     yield break;
                 }
                 if (!this.IsRelevant(folder))
