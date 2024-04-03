@@ -138,7 +138,7 @@ namespace StardewModdingAPI.Toolkit.Framework.ModScanning
 
                 // empty folder
                 if (!relevantFiles.Any())
-                    return new ModFolder(root, searchFolder, ModType.Invalid, null, ModParseError.EmptyFolder, "it's an empty folder.");
+                    return new ModFolder(root, searchFolder, ModType.Invalid, null, ModParseError.EmptyFolder, I18nUtilities.Get("console.mod-scanner.empty-folder", null));
 
                 // XNB mod
                 if (this.IsXnbMod(relevantFiles))
