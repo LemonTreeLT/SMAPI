@@ -131,5 +131,5 @@
     "console.mod-scanner.empty-vortex-folder": "这是一个空的Vortex目录 (这个模组是不是在Vortex中禁用了).",
     "console.mod-scanner.error-invalid-manifest": "无效的manifest.json文件.",
     "console.mod-scanner.error-parsing-manifest-failed": "解析manifest.json失败，原因: {{msg}}",
-    "console.mod-scanner.error-ignored-folder": "忽略这个文件夹因为他的名字不是以.开头"
+    "console.mod-scanner.error-ignored-folder": "忽略这个文件夹因为他的名字以.开头"
 }
