@@ -127,5 +127,9 @@
     "console.mod-scanner-no-manifest": "it contains files, but none of them are manifest.json.",
     "console.mod-scanner.smapi-installer-isnt-mod": "the SMAPI installer isn't a mod (you can delete this folder after running the installer file).",
     "console.mod-scanner.not-a-mod": "it's not a SMAPI mod (see https://smapi.io/xnb for info).",
-    "console.mod-scanner.empty-folder": "it's an empty folder."
+    "console.mod-scanner.empty-folder": "it's an empty folder.",
+    "console.mod-scanner.empty-vortex-folder": "it's an empty Vortex folder (is the mod disabled in Vortex?).",
+    "console.mod-scanner.error-invalid-manifest": "its manifest is invalid.",
+    "console.mod-scanner.error-parsing-manifest-failed": "parsing its manifest failed: {{msg}}",
+    "console.mod-scanner.error-ignored-folder": "ignored folder because its name starts with a dot."
 }
