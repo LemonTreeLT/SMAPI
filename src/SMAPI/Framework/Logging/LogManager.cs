@@ -329,7 +329,7 @@ namespace StardewModdingAPI.Framework.Logging
             // log intro
             {
                 int count = modsWithWarnings.Length + skippedMods.Length;
-                this.Monitor.Log($"Found {count} mod{(count == 1 ? "" : "s")} with warnings:", LogLevel.Info);
+                this.Monitor.Log(I18nUtilities.Get("console.log-manager.found-mod-with-warnings", new { count, ModCountFormat = count == 1 ? "" : "s" }), LogLevel.Info);
             }
 
             // log skipped mods
