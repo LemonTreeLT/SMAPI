@@ -33,6 +33,15 @@
     "console.log-manager.broken-mods": "损坏的模组",
     "console.log-manager.broken-mods-cause-bug": "这些模组存在代码错误，但是你配置了SMAPI来加载它们。这可能会导致错误或者漏洞，",
     "console.log-manager.broken-mods-crashes-in-game": "游戏中可能会出现错误或崩溃。",
+
+    "console.log-manager.changed-save-serializer": "修改了存档序列化程序的模组",
+    "console.log-manager.save-serializer-warn": "这些模组更改了存档序列化程序。它们可能会破坏你的存档文件，或者使其无法使用，如果",
+    "console.log-manager.save-serializer-suggestion": "你卸载这些模组的话。",
+
+    "console.log-manager.patched-game-code": "修改了游戏代码的模组",
+    "console.log-manager.patched-game-code-warn": "这些模组直接修改了游戏代码。它们更有可能在游戏中引起错误或漏洞；如果",
+    "console.log-manager.patched-game-code-suggestion": "你的游戏出现问题，请尝试首先移除这些模组。否则，你可以忽略此警告。",
+
     "console.game-content-helper.requested-cache-invalidation-for-asset": "请求使'{{assetName}}'的缓存失效。",
     "console.game-content-helper.requested-cache-invalidation-for-all-assets": "请求使所有符合条件的资产的缓存失效。",
     "console.mod-registry-helper.access-mod-provided-api": "尝试在所有模组初始化之前访问模组提供的 API。",

@@ -384,15 +384,17 @@ namespace StardewModdingAPI.Framework.Logging
                 );
 
                 // changes serializer
-                this.LogModWarningGroup(modsWithWarnings, ModWarning.ChangesSaveSerializer, LogLevel.Warn, "Changed save serializer",
-                    "These mods change the save serializer. They may corrupt your save files, or make them unusable if",
-                    "you uninstall these mods."
+                this.LogModWarningGroup(modsWithWarnings, ModWarning.ChangesSaveSerializer, LogLevel.Warn,
+                    I18nUtilities.Get("console.log-manager.changed-save-serializer"),
+                    I18nUtilities.Get("console.log-manager.save-serializer-warn"),
+                    I18nUtilities.Get("console.log-manager.save-serializer-suggestion")
                 );
 
                 // patched game code
-                this.LogModWarningGroup(modsWithWarnings, ModWarning.PatchesGame, LogLevel.Info, "Patched game code",
-                    "These mods directly change the game code. They're more likely to cause errors or bugs in-game; if",
-                    "your game has issues, try removing these first. Otherwise you can ignore this warning."
+                this.LogModWarningGroup(modsWithWarnings, ModWarning.PatchesGame, LogLevel.Info,
+                    I18nUtilities.Get("console.log-manager.patched-game-code"),
+                    I18nUtilities.Get("console.log-manager.patched-game-code-warn"),
+                    I18nUtilities.Get("console.log-manager.patched-game-code-suggestion")
                 );
 
                 // unvalidated update tick
