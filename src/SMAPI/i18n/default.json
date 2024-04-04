@@ -139,6 +139,8 @@
     "console.sgame.error-when-draw-loop": "An error occurred in the game's draw loop: {{LogSummary}}",
     "console.sgame.recover-sprite-from-error": "Recovering sprite batch from error...",
     "console.sgame.could-not-recover-game-draw": "Could not recover game draw state: {{LogSummary}}",
+    "console.sgame.steam-not-load1": "Oops! Steam achievements won't work because Steam isn't loaded. See 'Configure your game client' in the install guide for more info: https://smapi.io/install.",
+    "console.sgame.steam-not-load2": "Oops! Steam achievements won't work because Steam isn't loaded. You can launch the game through Steam to fix that.",
     "console.s-mod-hooks.synchronizing-task": "Synchronizing '{{id}}' task...",
     "console.s-mod-hooks.synchronizing-task-complete": "   task complete.",
     "console.s-mod-hooks.draw-menu-crashed": "The {{MenuChainLabel}} menu crashed while drawing itself. SMAPI will force it to exit to avoid crashing the game.\n{{LogSummary}}",

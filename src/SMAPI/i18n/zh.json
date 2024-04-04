@@ -139,6 +139,8 @@
     "console.sgame.error-when-draw-loop": "游戏绘制循环发生错误：{{LogSummary}}",
     "console.sgame.recover-sprite-from-error": "从错误中恢复精灵批处理...",
     "console.sgame.could-not-recover-game-draw": "无法恢复游戏绘制状态：{{LogSummary}}",
+    "console.sgame.steam-not-load1": "糟糕！Steam 成就无法工作，因为 Steam 没有加载。请查看安装指南中的“配置游戏客户端”以获取更多信息：https://smapi.io/install。",
+    "console.sgame.steam-not-load2": "糟糕！Steam 成就无法工作，因为 Steam 没有加载。您可以通过 Steam 启动游戏以修复此问题。",
     "console.s-mod-hooks.synchronizing-task": "正在同步 '{{id}}' 任务...",
     "console.s-mod-hooks.synchronizing-task-complete": "   任务完成。",
     "console.s-mod-hooks.draw-menu-crashed": "{{MenuChainLabel}} 菜单在绘制时崩溃。SMAPI 将强制其退出以避免游戏崩溃。\n{{LogSummary}}",
