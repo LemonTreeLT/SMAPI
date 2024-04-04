@@ -76,6 +76,13 @@ namespace StardewModdingAPI.Toolkit.Utilities
 
         /// <summary>Get I18N text</summary>
         /// <param name="key">The translation key.</param>
+        public static string Get(string key)
+        {
+            return Get(key, null);
+        }
+
+        /// <summary>Get I18N text</summary>
+        /// <param name="key">The translation key.</param>
         /// <param name="tokens">An object containing token key/value pairs. This can be an anonymous object (like <c>new { value = 42, name = "Cranberries" }</c>), a dictionary, or a class instance.</param>
         public static string Get(string key, object? tokens)
         {

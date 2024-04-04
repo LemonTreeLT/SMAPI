@@ -377,9 +377,10 @@ namespace StardewModdingAPI.Framework.Logging
             if (modsWithWarnings.Any())
             {
                 // broken code
-                this.LogModWarningGroup(modsWithWarnings, ModWarning.BrokenCodeLoaded, LogLevel.Error, "Broken mods",
-                    "These mods have broken code, but you configured SMAPI to load them anyway. This may cause bugs,",
-                    "errors, or crashes in-game."
+                this.LogModWarningGroup(modsWithWarnings, ModWarning.BrokenCodeLoaded, LogLevel.Error,
+                    I18nUtilities.Get("console.log-manager.broken-mods"),
+                    I18nUtilities.Get("console.log-manager.broken-mods-cause-bug"),
+                    I18nUtilities.Get("console.log-manager.broken-mods-crashes-in-game")
                 );
 
                 // changes serializer
