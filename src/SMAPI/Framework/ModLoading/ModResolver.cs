@@ -9,6 +9,7 @@ using StardewModdingAPI.Toolkit.Framework.ModData;
 using StardewModdingAPI.Toolkit.Framework.ModScanning;
 using StardewModdingAPI.Toolkit.Framework.UpdateData;
 using StardewModdingAPI.Toolkit.Serialization.Models;
+using StardewModdingAPI.Toolkit.Utilities;
 using StardewModdingAPI.Toolkit.Utilities.PathLookups;
 
 namespace StardewModdingAPI.Framework.ModLoading
@@ -46,7 +47,7 @@ namespace StardewModdingAPI.Framework.ModLoading
 
                 IModMetadata metadata = new ModMetadata(folder.DisplayName, folder.Directory.FullName, rootPath, manifest, dataRecord, isIgnored: shouldIgnore);
                 if (shouldIgnore)
-                    metadata.SetStatus(status, ModFailReason.DisabledByDotConvention, "disabled by dot convention");
+                    metadata.SetStatus(status, ModFailReason.DisabledByDotConvention, I18nUtilities.Get("console.mod-resolver.disabled-by-dot"));
                 else if (status == ModMetadataStatus.Failed)
                 {
                     ModFailReason reason = folder.ManifestParseError switch
@@ -86,13 +87,13 @@ namespace StardewModdingAPI.Framework.ModLoading
                 switch (mod.DataRecord?.Status)
                 {
                     case ModStatus.Obsolete:
-                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.Obsolete, $"it's obsolete: {mod.DataRecord.StatusReasonPhrase}", this.GetTechnicalReasonForStatusOverride(mod));
+                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.Obsolete, I18nUtilities.Get("console.mod-resolver.it-is-obsolete", new { ModStatusReasonPhrase  = mod.DataRecord.StatusReasonPhrase }), this.GetTechnicalReasonForStatusOverride(mod));
                         continue;
 
                     case ModStatus.AssumeBroken:
                         {
                             // get reason
-                            string reasonPhrase = mod.DataRecord.StatusReasonPhrase ?? "it's no longer compatible";
+                            string reasonPhrase = mod.DataRecord.StatusReasonPhrase ?? I18nUtilities.Get("console.mod-resolver.no-longer-compatible");
 
                             // get update URLs
                             List<string> updateUrls = new List<string>();
@@ -107,12 +108,12 @@ namespace StardewModdingAPI.Framework.ModLoading
                             updateUrls.Add("https://smapi.io/mods");
 
                             // build error
-                            string error = $"{reasonPhrase}. Please check for a ";
+                            string error = I18nUtilities.Get("console.mod-resolver.check-new-version", new { reasonPhrase });
                             if (mod.DataRecord.StatusUpperVersion == null || mod.Manifest.Version?.Equals(mod.DataRecord.StatusUpperVersion) == true)
-                                error += "newer version";
+                                error += I18nUtilities.Get("console.mod-resolver.new-version");
                             else
-                                error += $"version newer than {mod.DataRecord.StatusUpperVersion}";
-                            error += " at " + string.Join(" or ", updateUrls);
+                                error += I18nUtilities.Get("console.mod-resolver.new-version-than", new { ModStatusUpperVersion = mod.DataRecord.StatusUpperVersion });
+                            error += I18nUtilities.Get("console.mod-resolver.at") + string.Join(I18nUtilities.Get("console.mod-resolver.or"), updateUrls);
 
                             mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.Incompatible, error, this.GetTechnicalReasonForStatusOverride(mod));
                         }
@@ -122,14 +123,14 @@ namespace StardewModdingAPI.Framework.ModLoading
                 // validate SMAPI version
                 if (mod.Manifest.MinimumApiVersion?.IsNewerThan(apiVersion) == true)
                 {
-                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.Incompatible, $"it needs SMAPI {mod.Manifest.MinimumApiVersion} or later. Please update SMAPI to the latest version to use this mod.");
+                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.Incompatible, I18nUtilities.Get("console.mod-resolver.need-smapi-version-later",new { ModMinimumApiVersion = mod.Manifest.MinimumApiVersion }));
                     continue;
                 }
 
                 // validate manifest format
                 if (!ManifestValidator.TryValidateFields(mod.Manifest, out string manifestError))
                 {
-                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, $"its {manifestError}");
+                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, I18nUtilities.Get("console.mod-resolver.its-manifest-error", new { manifestError }));
                     continue;
                 }
 
@@ -140,7 +141,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                     FileInfo file = pathLookup.GetFile(mod.Manifest.EntryDll!);
                     if (!file.Exists)
                     {
-                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, $"its DLL '{mod.Manifest.EntryDll}' doesn't exist.");
+                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.InvalidManifest, I18nUtilities.Get("console.mod-resolver.its-dll-not-exist", new { ModEntryDll = mod.Manifest.EntryDll }));
                         continue;
                     }
                 }
@@ -159,7 +160,8 @@ namespace StardewModdingAPI.Framework.ModLoading
                             continue;
 
                         string folderList = string.Join(", ", group.Select(p => p.GetRelativePathWithRoot()).OrderBy(p => p));
-                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.Duplicate, $"you have multiple copies of this mod installed. To fix this, delete these folders and reinstall the mod: {folderList}.");
+                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.Duplicate,
+                            I18nUtilities.Get("console.mod-resolver.multiple-copies-of-mod", new { folderList }));
                     }
                 }
             }
@@ -283,7 +285,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                 if (failedModNames.Any())
                 {
                     sortedMods.Push(mod);
-                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, $"it requires mods which aren't installed ({string.Join(", ", failedModNames)}).");
+                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, I18nUtilities.Get("console.mod-resolver.requires-mod-not-install", new {FailedModNames = string.Join(", ", failedModNames) }));
                     return states[mod] = ModDependencyStatus.Failed;
                 }
             }
