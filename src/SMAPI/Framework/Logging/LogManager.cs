@@ -398,15 +398,17 @@ namespace StardewModdingAPI.Framework.Logging
                 );
 
                 // unvalidated update tick
-                this.LogModWarningGroup(modsWithWarnings, ModWarning.UsesUnvalidatedUpdateTick, LogLevel.Info, "Bypassed safety checks",
-                    "These mods bypass SMAPI's normal safety checks, so they're more likely to cause errors or save",
-                    "corruption. If your game has issues, try removing these first."
+                this.LogModWarningGroup(modsWithWarnings, ModWarning.UsesUnvalidatedUpdateTick, LogLevel.Info,
+                    I18nUtilities.Get("console.log-manager.unvalidated-update-tick"),
+                    I18nUtilities.Get("console.log-manager.unvalidated-update-tick-warn"),
+                    I18nUtilities.Get("console.log-manager.unvalidated-update-tick-suggestion")
                 );
 
                 // direct console access
-                this.LogModWarningGroup(modsWithWarnings, ModWarning.UsesUnvalidatedUpdateTick, LogLevel.Trace, "Direct console access",
-                    "These mods access the SMAPI console window directly. This is more fragile, and their output may not",
-                    "be logged by SMAPI."
+                this.LogModWarningGroup(modsWithWarnings, ModWarning.UsesUnvalidatedUpdateTick, LogLevel.Trace,
+                    I18nUtilities.Get("console.log-manager.direct-console-access"),
+                    I18nUtilities.Get("console.log-manager.direct-console-access-warn"),
+                    I18nUtilities.Get("console.log-manager.direct-console-access-warn2")
                 );
 
                 // paranoid warnings
@@ -416,12 +418,12 @@ namespace StardewModdingAPI.Framework.Logging
                         modsWithWarnings,
                         match: mod => mod.HasWarnings(ModWarning.AccessesFilesystem, ModWarning.AccessesShell),
                         level: LogLevel.Debug,
-                        heading: "Direct system access",
+                        heading: I18nUtilities.Get("console.log-manager.direct-system-access"),
                         blurb: new[]
                         {
-                            "You enabled paranoid warnings and these mods directly access the filesystem, shells/processes, or",
-                            "SMAPI console. (This is usually legitimate and innocent usage; this warning is only useful for",
-                            "further investigation.)"
+                            I18nUtilities.Get("console.log-manager.direct-system-access-warn1"),
+                            I18nUtilities.Get("console.log-manager.direct-system-access-warn2"),
+                            I18nUtilities.Get("console.log-manager.direct-system-access-warn3"),
                         },
                         modLabel: mod =>
                         {
@@ -437,9 +439,10 @@ namespace StardewModdingAPI.Framework.Logging
                 }
 
                 // no update keys
-                this.LogModWarningGroup(modsWithWarnings, ModWarning.NoUpdateKeys, LogLevel.Debug, "No update keys",
-                    "These mods have no update keys in their manifest. SMAPI may not notify you about updates for these",
-                    "mods. Consider notifying the mod authors about this problem."
+                this.LogModWarningGroup(modsWithWarnings, ModWarning.NoUpdateKeys, LogLevel.Debug,
+                    I18nUtilities.Get("console.log-manager.no-update-keys"),
+                    I18nUtilities.Get("console.log-manager.no-update-keys-warn1"),
+                    I18nUtilities.Get("console.log-manager.no-update-keys-warn2")
                 );
             }
         }

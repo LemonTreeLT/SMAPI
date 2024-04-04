@@ -43,7 +43,22 @@
     "console.log-manager.patched-game-code-warn": "These mods directly change the game code. They're more likely to cause errors or bugs in-game; if",
     "console.log-manager.patched-game-code-suggestion": "your game has issues, try removing these first. Otherwise you can ignore this warning.",
 
+    "console.log-manager.unvalidated-update-tick": "Bypassed safety checks",
+    "console.log-manager.unvalidated-update-tick-warn": "These mods bypass SMAPI's normal safety checks, so they're more likely to cause errors or save",
+    "console.log-manager.unvalidated-update-tick-suggestion": "corruption. If your game has issues, try removing these first.",
 
+    "console.log-manager.direct-console-access": "Direct console access",
+    "console.log-manager.direct-console-access-warn": "These mods access the SMAPI console window directly. This is more fragile, and their output may not",
+    "console.log-manager.direct-console-access-warn2": "be logged by SMAPI.",
+
+    "console.log-manager.direct-system-access": "Direct system access",
+    "console.log-manager.direct-system-access-warn1": "You enabled paranoid warnings and these mods directly access the filesystem, shells/processes, or",
+    "console.log-manager.direct-system-access-warn2": "SMAPI console. (This is usually legitimate and innocent usage; this warning is only useful for",
+    "console.log-manager.direct-system-access-warn3": "further investigation.)",
+
+    "console.log-manager.no-update-keys": "No update keys",
+    "console.log-manager.no-update-keys-warn1": "These mods have no update keys in their manifest. SMAPI may not notify you about updates for these",
+    "console.log-manager.no-update-keys-warn2": "mods. Consider notifying the mod authors about this problem.",
 
     "console.game-content-helper.requested-cache-invalidation-for-asset": "Requested cache invalidation for '{{assetName}}'.",
     "console.game-content-helper.requested-cache-invalidation-for-all-assets": "Requested cache invalidation for all assets matching a predicate.",
