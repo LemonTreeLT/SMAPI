@@ -305,7 +305,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                 if (failedLabels.Any())
                 {
                     sortedMods.Push(mod);
-                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, $"it needs newer versions of some mods: {string.Join(", ", failedLabels)}.");
+                    mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, I18nUtilities.Get("console.mod-resolver.needs-newer-versions", new {FailedLabels = string.Join(", ", failedLabels) }));
                     return states[mod] = ModDependencyStatus.Failed;
                 }
             }
@@ -326,7 +326,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                     if (states[requiredMod] == ModDependencyStatus.Checking)
                     {
                         sortedMods.Push(mod);
-                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, $"its dependencies have a circular reference: {string.Join(" => ", subchain.Select(p => p.DisplayName))} => {requiredMod.DisplayName}).");
+                        mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, I18nUtilities.Get("console.mod-resolver.circular-dependencies", new { Modscircular = string.Join(" => ", subchain.Select(p => p.DisplayName)), RequiredModName = requiredMod.DisplayName }));
                         return states[mod] = ModDependencyStatus.Failed;
                     }
 
@@ -342,7 +342,7 @@ namespace StardewModdingAPI.Framework.ModLoading
                         // failed, which means this mod can't be loaded either
                         case ModDependencyStatus.Failed:
                             sortedMods.Push(mod);
-                            mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, $"it needs the '{requiredMod.DisplayName}' mod, which couldn't be loaded.");
+                            mod.SetStatus(ModMetadataStatus.Failed, ModFailReason.MissingDependencies, I18nUtilities.Get("console.mod-resolver.miss-dependencies", new { requiredMod.DisplayName }));
                             return states[mod] = ModDependencyStatus.Failed;
 
                         // unexpected status
