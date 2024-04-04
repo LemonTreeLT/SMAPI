@@ -1,5 +1,6 @@
 using System;
 using StardewModdingAPI.Internal;
+using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley.Logging;
 
 namespace StardewModdingAPI.Framework
@@ -56,9 +57,9 @@ namespace StardewModdingAPI.Framework
             {
                 this.Monitor.Log(
 #if SMAPI_FOR_WINDOWS
-                    "Oops! Steam achievements won't work because Steam isn't loaded. See 'Configure your game client' in the install guide for more info: https://smapi.io/install.",
+                    I18nUtilities.Get("console.sgame.steam-not-load1"),
 #else
-                    "Oops! Steam achievements won't work because Steam isn't loaded. You can launch the game through Steam to fix that.",
+                    I18nUtilities.Get("console.sgame.steam-not-load2"),
 #endif
                     LogLevel.Error
                 );
