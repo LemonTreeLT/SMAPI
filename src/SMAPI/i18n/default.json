@@ -28,6 +28,7 @@
     "console.log-manager.received-no-terminal-argument": "Writing to the terminal is disabled because the --no-terminal argument was received. This usually means launching the terminal failed.",
     "console.log-manager.loaded-mods-count": "Loaded {{LoadedModsLength}} mods{{PunctuationFormat}}",
     "console.log-manager.load-content-packs-connt": "Loaded {{ContentPacksLength}} content packs:",
+    "console.log-manager.found-mod-with-warnings": "Found {{count}} mod{{ModCountFormat}} with warnings:",
     "console.log-manager.skiped-mods": "   Skipped mods",
     "console.log-manager.broken-mods": "Broken mods",
     "console.log-manager.broken-mods-cause-bug": "These mods have broken code, but you configured SMAPI to load them anyway. This may cause bugs,",
