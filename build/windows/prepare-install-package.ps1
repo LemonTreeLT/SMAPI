@@ -16,7 +16,7 @@
 ## Fetch values
 ##########
 # paths
-$gamePath = "C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley"
+$gamePath = "D:\Steam\steamapps\common\Stardew Valley"
 $bundleModNames = "ConsoleCommands", "SaveBackup"
 
 # build configuration

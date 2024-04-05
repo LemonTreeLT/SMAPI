@@ -351,15 +351,15 @@ namespace StardewModdingAPI.Framework.Logging
                                 ? $" (ID: {mod.Manifest?.UniqueID ?? "???"}, path: {mod.RelativeDirectoryPath})"
                                 : "";
 
-                            string message = $"      - {mod.DisplayName}{(" " + mod.Manifest?.Version?.ToString()).TrimEnd()}{technicalInfo} because {mod.Error}";
+                            string message = I18nUtilities.Get("console.log-manager.mod-error-message", new { mod.DisplayName, ModVersion = (" " + mod.Manifest?.Version?.ToString()).TrimEnd(), technicalInfo, mod.Error });
 
                             // duplicate mod: log first one only, don't show redundant version
                             if (mod.FailReason == ModFailReason.Duplicate && mod.HasManifest())
                             {
                                 if (loggedDuplicateIds.Add(mod.Manifest!.UniqueID))
                                     continue; // already logged
-
-                                message = $"      - {mod.DisplayName} because {mod.Error}";
+                                
+                                message = I18nUtilities.Get("console.log-manager.mod-error-message2", new { mod.DisplayName, mod.Error });
                             }
 
                             // log message
