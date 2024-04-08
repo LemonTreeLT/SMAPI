@@ -31,7 +31,7 @@
     "console.log-manager.found-mod-with-warnings": "发现{{count}}个模组存在警告：",
     "console.log-manager.skiped-mods": "   跳过的模组",
     "console.log-manager.mods-could-not-added": "      这些模组无法添加到游戏中。",
-    "console.log-manager.mod-error-message": "      - {{DisplayName}}{{ModVersion}}{technicalInfo} 因为{{Error}}",
+    "console.log-manager.mod-error-message": "      - {{DisplayName}}{{ModVersion}}{{technicalInfo}} 因为{{Error}}",
     "console.log-manager.mod-error-message2": "      - {{DisplayName}} 因为{{Error}}",
     "console.log-manager.broken-mods": "损坏的模组",
     "console.log-manager.broken-mods-cause-bug": "这些模组存在代码错误，但是你配置了SMAPI来加载它们。这可能会导致错误或者漏洞，",
