@@ -226,7 +226,7 @@ namespace StardewModdingAPI.Framework.Logging
             // log basic info
             this.Monitor.LogTra("console.log-manager.mods-go-here", new { modsPath }, LogLevel.Info);
             if (modsPath != Constants.DefaultModsPath)
-                this.Monitor.LogTra("console.log-manager.using-custom-mod-path-argument", null);
+                this.Monitor.LogTra("console.log-manager.using-custom-mod-path-argument", new { Constants.GamePath });
             this.Monitor.Log($"Log started at {DateTime.UtcNow:s} UTC");
 
             // log custom settings
@@ -322,7 +322,15 @@ namespace StardewModdingAPI.Framework.Logging
         private void LogModWarnings(IEnumerable<IModMetadata> mods, IModMetadata[] skippedMods, bool logParanoidWarnings, bool logTechnicalDetailsForBrokenMods)
         {
             // get mods with warnings
-            IModMetadata[] modsWithWarnings = mods.Where(p => p.Warnings != ModWarning.None).ToArray();
+            IModMetadata[] modsWithWarnings = mods
+                .Where(p =>
+                    (
+                        logParanoidWarnings
+                            ? p.Warnings
+                            : p.Warnings & ~ModWarning.AccessesFilesystem & ~ModWarning.AccessesShell
+                    ) != ModWarning.None
+                )
+                .ToArray();
             if (!modsWithWarnings.Any() && !skippedMods.Any())
                 return;
 
@@ -351,15 +359,15 @@ namespace StardewModdingAPI.Framework.Logging
                                 ? $" (ID: {mod.Manifest?.UniqueID ?? "???"}, path: {mod.RelativeDirectoryPath})"
                                 : "";
 
-                            string message = $"      - {mod.DisplayName}{(" " + mod.Manifest?.Version?.ToString()).TrimEnd()}{technicalInfo} because {mod.Error}";
+                            string message = I18nUtilities.Get("console.log-manager.mod-error-message", new { mod.DisplayName, ModVersion = (" " + mod.Manifest?.Version?.ToString()).TrimEnd(), technicalInfo, mod.Error });
 
                             // duplicate mod: log first one only, don't show redundant version
                             if (mod.FailReason == ModFailReason.Duplicate && mod.HasManifest())
                             {
                                 if (loggedDuplicateIds.Add(mod.Manifest!.UniqueID))
                                     continue; // already logged
-
-                                message = $"      - {mod.DisplayName} because {mod.Error}";
+                                
+                                message = I18nUtilities.Get("console.log-manager.mod-error-message2", new { mod.DisplayName, mod.Error });
                             }
 
                             // log message

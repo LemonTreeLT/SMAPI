@@ -1,6 +1,62 @@
 ← [README](README.md)
 
 # Release notes
+## 4.0.6
+Released 07 April 2024 for Stardew Valley 1.6.0 or later.
+
+* For player:
+  * The SMAPI log file now includes installed mod IDs, to help with troubleshooting (thanks to DecidedlyHuman!).
+
+* For mod authors:
+  * Added optional [`MinimumGameVersion` manifest field](https://stardewvalleywiki.com/Modding:Modder_Guide/APIs/Manifest#Minimum_SMAPI_or_game_version).
+
+## 4.0.5
+Released 06 April 2024 for Stardew Valley 1.6.0 or later.
+
+* For players:
+  * The installer now deletes obsolete files from very old SMAPI versions again.
+  * The installer now deletes Error Handler automatically if it's at the default path.
+  * Fixed mods sometimes not applying logic inside new buildings.
+  * Minor optimizations.
+  * Updated mod compatibility list.
+
+* For mod authors:
+  * Fixed world-changed events (e.g. `ObjectListChanged`) not working correctly inside freshly-constructed buildings.
+
+## 4.0.4
+Released 29 March 2024 for Stardew Valley 1.6.0 or later.
+
+* For players:
+  * Added `log_context` console command, which replaces `test_input` and logs more info like menu changes.
+  * Added [`--prefer-terminal-name` command-line argument](technical/smapi.md#command-line-arguments) to override which terminal SMAPI is launched with (thanks to test482!).
+  * Fixed some mods compiled for Stardew Valley 1.6.3+ not working in 1.6.0–1.6.2.
+  * Fixed SMAPI's "_Found warnings with X mods_" message counting hidden warnings.
+  * Improved translations. Thanks to RezaHidayatM (added Indonesian)!
+
+* For the web UI:
+  * Improved smapi.io colors for accessibility, converted PNG images to SVG, and updated Patreon logo (thanks to ishan!).
+  * Fixed JSON schema validation:
+    * Manifest `UpdateKeys` field now allows dots in the GitHub repo name.
+    * Fixed Content Patcher's `FromMapFile` and `FromFile` patterns.
+
+## 4.0.3
+Released 27 March 2024 for Stardew Valley 1.6.0 or later.
+
+* For players:
+  * Updated compatibility rewrites for Stardew Valley 1.6.3.
+  * Updated mod compatibility list.
+  * Tweaked `player_add` console command's error messages for clarity.
+
+## 4.0.2
+Released 24 March 2024 for Stardew Valley 1.6.0 or later.
+
+* For players:
+  * Updated mod compatibility list.
+  * Improved status for obsolete mods to be clearer that they can be removed.
+  * Disabled Extra Map Layers mod.
+    _Extra Map Layers mod caused visual issues like dark shadows in all locations with extra map layers, since the game now handles them automatically. SMAPI now disables Extra Map Layers and ignores dependencies on it._
+  * When using a custom `Mods` folder path, SMAPI now logs the game folder path to simplify troubleshooting.
+
 # 4.0.1
 Released 20 March 2024 for Stardew Valley 1.6.0 or later.
 
