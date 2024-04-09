@@ -430,7 +430,7 @@ namespace StardewModdingAPI.Framework
                 mods = mods.Where(p => !p.IsIgnored).ToArray();
 
                 // validate manifests
-                resolver.ValidateManifests(mods, Constants.ApiVersion, toolkit.GetUpdateUrl, getFileLookup: this.GetFileLookup);
+                resolver.ValidateManifests(mods, Constants.ApiVersion, Constants.GameVersion, toolkit.GetUpdateUrl, getFileLookup: this.GetFileLookup);
 
                 // apply load order customizations
                 if (this.Settings.ModsToLoadEarly.Any() || this.Settings.ModsToLoadLate.Any())
@@ -658,7 +658,7 @@ namespace StardewModdingAPI.Framework
                 bool saveParsed = false;
                 if (Game1.currentLoader != null)
                 {
-                    this.Monitor.LogTra("console.score.game-loader-synchronizing", null);
+                    this.Monitor.LogTra("console.score.game-loader-synchronizing", null, Monitor.ContextLogLevel);
                     Game1.game1.UpdateTitleScreen(Game1.currentGameTime); // run game logic to change music on load, etc
                     // ReSharper disable once ConstantConditionalAccessQualifier -- may become null within the loop
                     while (Game1.currentLoader?.MoveNext() == true)
@@ -689,7 +689,7 @@ namespace StardewModdingAPI.Framework
                     }
 
                     Game1.currentLoader = null;
-                    this.Monitor.LogTra("console.score.game-loader-done", null);
+                    this.Monitor.LogTra("console.score.game-loader-done", null, Monitor.ContextLogLevel);
                 }
 
                 // While a background task is in progress, the game may make changes to the game
@@ -721,7 +721,7 @@ namespace StardewModdingAPI.Framework
                     if (!Context.IsWorldReady && !instance.IsBetweenCreateEvents)
                     {
                         instance.IsBetweenCreateEvents = true;
-                        this.Monitor.LogTra("console.score.context-before-save-creation", null);
+                        this.Monitor.LogTra("console.score.context-before-save-creation", null, Monitor.ContextLogLevel);
                         events.SaveCreating.RaiseEmpty();
                     }
 
@@ -729,7 +729,7 @@ namespace StardewModdingAPI.Framework
                     if (Context.IsWorldReady && !instance.IsBetweenSaveEvents)
                     {
                         instance.IsBetweenSaveEvents = true;
-                        this.Monitor.LogTra("console.score.context-before-save", null);
+                        this.Monitor.LogTra("console.score.context-before-save", null, Monitor.ContextLogLevel);
                         events.Saving.RaiseEmpty();
                     }
 
@@ -776,7 +776,7 @@ namespace StardewModdingAPI.Framework
                     {
                         // raise after-create
                         instance.IsBetweenCreateEvents = false;
-                        this.Monitor.LogTra("console.score.context-after-save-creation", new { GameYear = Game1.year, GameCurrentSeasion = Game1.currentSeason, GameDayOfMonth = Game1.dayOfMonth });
+                        this.Monitor.LogTra("console.score.context-after-save-creation", new { GameYear = Game1.year, GameCurrentSeasion = Game1.currentSeason, GameDayOfMonth = Game1.dayOfMonth }, Monitor.ContextLogLevel);
                         this.OnLoadStageChanged(LoadStage.CreatedSaveFile);
                         events.SaveCreated.RaiseEmpty();
                     }
@@ -785,7 +785,7 @@ namespace StardewModdingAPI.Framework
                     {
                         // raise after-save
                         instance.IsBetweenSaveEvents = false;
-                        this.Monitor.LogTra("console.score.context-after-save", new { GameYear = Game1.year, GameCurrentSeasion = Game1.currentSeason, GameDayOfMonth = Game1.dayOfMonth });
+                        this.Monitor.LogTra("console.score.context-after-save", new { GameYear = Game1.year, GameCurrentSeasion = Game1.currentSeason, GameDayOfMonth = Game1.dayOfMonth }, Monitor.ContextLogLevel);
                         events.Saved.RaiseEmpty();
                         events.DayStarted.RaiseEmpty();
                     }
@@ -794,7 +794,7 @@ namespace StardewModdingAPI.Framework
                     ** Locale changed events
                     *********/
                     if (state.Locale.IsChanged)
-                        this.Monitor.LogTra("console.score.change-locale", new { LocaleCode = this.ContentCore.GetLocaleCode(state.Locale.New), NewLocale = state.Locale.New });
+                        this.Monitor.LogTra("console.score.change-locale", new { LocaleCode = this.ContentCore.GetLocaleCode(state.Locale.New), NewLocale = state.Locale.New }, Monitor.ContextLogLevel);
 
                     /*********
                     ** Load / return-to-title events
@@ -813,7 +813,7 @@ namespace StardewModdingAPI.Framework
                         else
                             context += " Single-player.";
 
-                        this.Monitor.Log(context);
+                        this.Monitor.Log(context, Monitor.ContextLogLevel);
 
                         // add context to window titles
                         this.UpdateWindowTitles();
@@ -834,7 +834,7 @@ namespace StardewModdingAPI.Framework
                     if (state.WindowSize.IsChanged)
                     {
                         if (verbose)
-                            this.Monitor.LogTra("console.score.window-size-change", new { WindowSize = state.WindowSize.New });
+                            this.Monitor.LogTra("console.score.window-size-change", new { WindowSize = state.WindowSize.New }, Monitor.ContextLogLevel);
 
                         if (events.WindowResized.HasListeners)
                             events.WindowResized.Raise(new WindowResizedEventArgs(state.WindowSize.Old, state.WindowSize.New));
@@ -873,24 +873,25 @@ namespace StardewModdingAPI.Framework
 
                                 bool raisePressed = events.ButtonPressed.HasListeners;
                                 bool raiseReleased = events.ButtonReleased.HasListeners;
+                                bool logInput = verbose || Monitor.ForceLogContext;
 
-                                if (verbose || raisePressed || raiseReleased)
+                                if (logInput || raisePressed || raiseReleased)
                                 {
                                     foreach ((SButton button, SButtonState status) in inputState.ButtonStates)
                                     {
                                         switch (status)
                                         {
                                             case SButtonState.Pressed:
-                                                if (verbose)
-                                                    this.Monitor.LogTra("console.score.button-press", new { button });
+                                                if (logInput)
+                                                    this.Monitor.LogTra("console.score.button-press", new { button }, Monitor.ContextLogLevel);
 
                                                 if (raisePressed)
                                                     events.ButtonPressed.Raise(new ButtonPressedEventArgs(button, cursor, inputState));
                                                 break;
 
                                             case SButtonState.Released:
-                                                if (verbose)
-                                                    this.Monitor.LogTra("console.score.button-released", new { button });
+                                                if (logInput)
+                                                    this.Monitor.LogTra("console.score.button-released", new { button }, Monitor.ContextLogLevel);
 
                                                 if (raiseReleased)
                                                     events.ButtonReleased.Raise(new ButtonReleasedEventArgs(button, cursor, inputState));
@@ -910,8 +911,8 @@ namespace StardewModdingAPI.Framework
                         IClickableMenu? was = state.ActiveMenu.Old;
                         IClickableMenu? now = state.ActiveMenu.New;
 
-                        if (verbose)
-                            this.Monitor.LogTra("console.score.menu-changed", new { New = now?.GetType().FullName ?? "none", Old = was?.GetType().FullName ?? "none" });
+                        if (verbose || Monitor.ForceLogContext)
+                            this.Monitor.LogTra("console.score.menu-changed", new { New = now?.GetType().FullName ?? "none", Old = was?.GetType().FullName ?? "none" }, Monitor.ContextLogLevel);
 
                         // raise menu events
                         if (events.MenuChanged.HasListeners)
@@ -935,7 +936,7 @@ namespace StardewModdingAPI.Framework
                             {
                                 string addedText = added.Any() ? string.Join(", ", added.Select(p => p.Name)) : "none";
                                 string removedText = removed.Any() ? string.Join(", ", removed.Select(p => p.Name)) : "none";
-                                this.Monitor.LogTra("console.score.location-list-changed", new { removedText, addedText });
+                                this.Monitor.LogTra("console.score.location-list-changed", new { removedText, addedText }, Monitor.ContextLogLevel);
                             }
 
                             if (events.LocationListChanged.HasListeners)
@@ -990,7 +991,7 @@ namespace StardewModdingAPI.Framework
                         if (raiseWorldEvents && state.Time.IsChanged)
                         {
                             if (verbose)
-                                this.Monitor.LogTra("console.score.time-changed", new { Time = state.Time.New });
+                                this.Monitor.LogTra("console.score.time-changed", new { Time = state.Time.New }, Monitor.ContextLogLevel);
 
                             if (events.TimeChanged.HasListeners)
                                 events.TimeChanged.Raise(new TimeChangedEventArgs(state.Time.Old, state.Time.New));
@@ -1006,7 +1007,7 @@ namespace StardewModdingAPI.Framework
                             if (playerState.Location.IsChanged)
                             {
                                 if (verbose)
-                                    this.Monitor.LogTra("console.score.set-play-location", new { Location = playerState.Location.New });
+                                    this.Monitor.LogTra("console.score.set-play-location", new { Location = playerState.Location.New }, Monitor.ContextLogLevel);
 
                                 if (events.Warped.HasListeners)
                                     events.Warped.Raise(new WarpedEventArgs(player, playerState.Location.Old!, playerState.Location.New!));
@@ -1022,7 +1023,7 @@ namespace StardewModdingAPI.Framework
                                         continue;
 
                                     if (verbose)
-                                        this.Monitor.LogTra("console.score.player-skill-change", new { New = value.New, Old = value.Old, skill });
+                                        this.Monitor.LogTra("console.score.player-skill-change", new { New = value.New, Old = value.Old, skill }, Monitor.ContextLogLevel);
 
                                     if (raiseLevelChanged)
                                         events.LevelChanged.Raise(new LevelChangedEventArgs(player, skill, value.Old, value.New));
@@ -1033,7 +1034,7 @@ namespace StardewModdingAPI.Framework
                             if (playerState.Inventory.IsChanged)
                             {
                                 if (verbose)
-                                    this.Monitor.LogTra("console.score.player-inventory-changed", null);
+                                    this.Monitor.LogTra("console.score.player-inventory-changed", null, Monitor.ContextLogLevel);
 
                                 if (events.InventoryChanged.HasListeners)
                                 {
@@ -1157,13 +1158,14 @@ namespace StardewModdingAPI.Framework
             // update data
             LoadStage oldStage = Context.LoadStage;
             Context.LoadStage = newStage;
-            this.Monitor.VerboseLog($"Context: load stage changed to {newStage}");
+            if (this.Monitor.IsVerbose || Monitor.ForceLogContext)
+                this.Monitor.Log($"Context: load stage changed to {newStage}", Monitor.ContextLogLevel);
 
             // handle stages
             switch (newStage)
             {
                 case LoadStage.ReturningToTitle:
-                    this.Monitor.LogTra("console.score.returning-to-title", null);
+                    this.Monitor.LogTra("console.score.returning-to-title", null, Monitor.ContextLogLevel);
                     this.OnReturningToTitle();
                     break;
 
@@ -1816,7 +1818,7 @@ namespace StardewModdingAPI.Framework
         /// <param name="suppressUpdateChecks">The mod IDs to ignore when validating update keys.</param>
         /// <param name="failReason">The reason the mod couldn't be loaded, if applicable.</param>
         /// <param name="errorReasonPhrase">The user-facing reason phrase explaining why the mod couldn't be loaded (if applicable).</param>
-        /// <param name="errorDetails">More detailed details about the error intended for developers (if any).</param>
+        /// <param name="errorDetails">More detailed info about the error intended for developers (if any).</param>
         /// <returns>Returns whether the mod was successfully loaded.</returns>
         private bool TryLoadMod(IModMetadata mod, IModMetadata[] mods, AssemblyLoader assemblyLoader, IInterfaceProxyFactory proxyFactory, JsonHelper jsonHelper, ContentCoordinator contentCore, ModDatabase modDatabase, HashSet<string> suppressUpdateChecks, [NotNullWhen(false)] out ModFailReason? failReason, out string? errorReasonPhrase, out string? errorDetails)
         {
@@ -1826,12 +1828,12 @@ namespace StardewModdingAPI.Framework
             {
                 string relativePath = mod.GetRelativePathWithRoot();
                 if (mod.IsContentPack)
-                    this.Monitor.LogTra("console.score.load-mod-is-content-pack", new { ModDisplayName = mod.DisplayName, relativePath });
+                    this.Monitor.LogTra("console.score.load-mod-is-content-pack", new { ModDisplayName = mod.DisplayName, relativePath, ModUniqueID = mod.Manifest.UniqueID });
                 // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract -- mod may be invalid at this point
                 else if (mod.Manifest?.EntryDll != null)
-                    this.Monitor.LogTra("console.score.load-mod-entry-not-null", new { ModDisplayName = mod.DisplayName, DirectorySeparatorChar = Path.DirectorySeparatorChar, relativePath, ModEntryDll = mod.Manifest.EntryDll }); // don't use Path.Combine here, since EntryDLL might not be valid
+                    this.Monitor.LogTra("console.score.load-mod-entry-not-null", new { ModDisplayName = mod.DisplayName, DirectorySeparatorChar = Path.DirectorySeparatorChar, relativePath, ModEntryDll = mod.Manifest.EntryDll, ModUniqueID = mod.Manifest.UniqueID }); // don't use Path.Combine here, since EntryDLL might not be valid
                 else
-                    this.Monitor.LogTra("console.score.load-mod-entry-null", new { ModDisplayName = mod.DisplayName, relativePath });
+                    this.Monitor.LogTra("console.score.load-mod-entry-null", new { ModDisplayName = mod.DisplayName, relativePath, ModUniqueID = mod.Manifest?.UniqueID ?? "<unknown>" });
             }
 
             // add warning for missing update key
@@ -1852,15 +1854,21 @@ namespace StardewModdingAPI.Framework
             // Although dependencies are validated before mods are loaded, a dependency may have failed to load.
             foreach (IManifestDependency dependency in manifest.Dependencies.Where(p => p.IsRequired))
             {
-                if (this.ModRegistry.Get(dependency.UniqueID) == null)
-                {
-                    string dependencyName = mods
-                        .FirstOrDefault(otherMod => otherMod.HasID(dependency.UniqueID))
-                        ?.DisplayName ?? dependency.UniqueID;
-                    errorReasonPhrase = $"it needs the '{dependencyName}' mod, which couldn't be loaded.";
-                    failReason = ModFailReason.MissingDependencies;
-                    return false;
-                }
+                // not missing
+                if (this.ModRegistry.Get(dependency.UniqueID) != null)
+                    continue;
+
+                // ignored in compatibility list (e.g. fully replaced by the game code)
+                if (modDatabase.Get(dependency.UniqueID)?.IgnoreDependencies is true)
+                    continue;
+
+                // mark failed
+                string dependencyName = mods
+                    .FirstOrDefault(otherMod => otherMod.HasID(dependency.UniqueID))
+                    ?.DisplayName ?? dependency.UniqueID;
+                errorReasonPhrase = $"it needs the '{dependencyName}' mod, which couldn't be loaded.";
+                failReason = ModFailReason.MissingDependencies;
+                return false;
             }
 
             // load as content pack

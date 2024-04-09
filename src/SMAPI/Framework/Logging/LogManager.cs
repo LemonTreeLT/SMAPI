@@ -226,7 +226,7 @@ namespace StardewModdingAPI.Framework.Logging
             // log basic info
             this.Monitor.LogTra("console.log-manager.mods-go-here", new { modsPath }, LogLevel.Info);
             if (modsPath != Constants.DefaultModsPath)
-                this.Monitor.LogTra("console.log-manager.using-custom-mod-path-argument", null);
+                this.Monitor.LogTra("console.log-manager.using-custom-mod-path-argument", new { Constants.GamePath });
             this.Monitor.Log($"Log started at {DateTime.UtcNow:s} UTC");
 
             // log custom settings
@@ -322,7 +322,15 @@ namespace StardewModdingAPI.Framework.Logging
         private void LogModWarnings(IEnumerable<IModMetadata> mods, IModMetadata[] skippedMods, bool logParanoidWarnings, bool logTechnicalDetailsForBrokenMods)
         {
             // get mods with warnings
-            IModMetadata[] modsWithWarnings = mods.Where(p => p.Warnings != ModWarning.None).ToArray();
+            IModMetadata[] modsWithWarnings = mods
+                .Where(p =>
+                    (
+                        logParanoidWarnings
+                            ? p.Warnings
+                            : p.Warnings & ~ModWarning.AccessesFilesystem & ~ModWarning.AccessesShell
+                    ) != ModWarning.None
+                )
+                .ToArray();
             if (!modsWithWarnings.Any() && !skippedMods.Any())
                 return;
 
