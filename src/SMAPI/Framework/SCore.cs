@@ -1866,7 +1866,7 @@ namespace StardewModdingAPI.Framework
                 string dependencyName = mods
                     .FirstOrDefault(otherMod => otherMod.HasID(dependency.UniqueID))
                     ?.DisplayName ?? dependency.UniqueID;
-                errorReasonPhrase = $"it needs the '{dependencyName}' mod, which couldn't be loaded.";
+                errorReasonPhrase = I18nUtilities.Get("console.score.need-dependency-mod",new { dependencyName });
                 failReason = ModFailReason.MissingDependencies;
                 return false;
             }
@@ -1904,23 +1904,23 @@ namespace StardewModdingAPI.Framework
                 catch (IncompatibleInstructionException) // details already in trace logs
                 {
                     string[] updateUrls = new[] { modDatabase.GetModPageUrlFor(manifest.UniqueID), "https://smapi.io/mods" }.Where(p => p != null).ToArray()!;
-                    errorReasonPhrase = $"it's no longer compatible. Please check for a new version at {string.Join(" or ", updateUrls)}";
+                    errorReasonPhrase = I18nUtilities.Get("console.score.no-longer-compatible", new { UpdateUrls = string.Join(" or ", updateUrls) });
                     failReason = ModFailReason.Incompatible;
                     return false;
                 }
                 catch (SAssemblyLoadFailedException ex)
                 {
-                    errorReasonPhrase = $"its DLL couldn't be loaded: {ex.Message}";
+                    errorReasonPhrase = I18nUtilities.Get("console.score.dll-could-not-be-loaded", new { ex.Message });
                     failReason = ModFailReason.LoadFailed;
                     return false;
                 }
                 catch (Exception ex)
                 {
-                    errorReasonPhrase = "its DLL couldn't be loaded.";
+                    errorReasonPhrase = I18nUtilities.Get("console.score.its-dll-could-not-be-loaded");
                     if (ex is BadImageFormatException && !EnvironmentUtility.Is64BitAssembly(assemblyFile.FullName))
-                        errorReasonPhrase = "it needs to be updated for 64-bit mode.";
+                        errorReasonPhrase = I18nUtilities.Get("console.score.need-64-bit");
 
-                    errorDetails = $"Error: {ex.GetLogSummary()}";
+                    errorDetails = I18nUtilities.Get("console.score.error-detail", new { ErrorSummary = ex.GetLogSummary() });
                     failReason = ModFailReason.LoadFailed;
                     return false;
                 }
