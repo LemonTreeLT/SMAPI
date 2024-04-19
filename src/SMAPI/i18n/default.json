@@ -138,6 +138,8 @@
     "console.score.load-mod-entry-not-null": "   {{ModDisplayName}} (from {{relativePath}}{{DirectorySeparatorChar}}{{ModEntryDll}}, ID: {{ModUniqueID}})...",
     "console.score.load-mod-entry-null": "   {{ModDisplayName}} (from {{relativePath}}, ID: {{ModUniqueID}})...",
     "console.score.load-mod-fail": "      Failed: {{ErrorDetail}}",
+    "console.score.need-dependency-mod": "it needs the '{{dependencyName}}' mod, which couldn't be loaded.",
+    "console.score.no-longer-compatible": "it's no longer compatible. Please check for a new version at {{UpdateUrls}}",
     "console.sgame.error-when-draw-loop": "An error occurred in the game's draw loop: {{LogSummary}}",
     "console.sgame.recover-sprite-from-error": "Recovering sprite batch from error...",
     "console.sgame.could-not-recover-game-draw": "Could not recover game draw state: {{LogSummary}}",
